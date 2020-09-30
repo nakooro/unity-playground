@@ -45,6 +45,8 @@ public class Client : MonoBehaviour
     }
     void Update()
     {
+        print(buffer.Length);
+
         if (Input.GetKeyDown(KeyCode.D))
             Send();
 
