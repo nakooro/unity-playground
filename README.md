@@ -7,4 +7,4 @@
 `Client` 與 `Server` 簡易連接
 
 ## 0x03 Lan
-`Socket` 與 `ProtoBuf` 開房連線
+`Socket` 與 `ProtoBuf` 解析
