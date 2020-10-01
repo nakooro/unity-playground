@@ -7,4 +7,4 @@
 `Client` 與 `Server` 簡易連接
 
 ## 0x03 Lan
-`Socket` 與 `ProtoBuf` 解析
+`Socket` 連線 `ProtoBuf` 解析 `Mysql`資料存放
