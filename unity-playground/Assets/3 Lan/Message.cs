@@ -9,9 +9,13 @@ using Google.Protobuf;
 namespace Assets._3_Lan
 {
     class Message
-    {
-
+    {        
         byte[] buffer = new byte[1024];
-        void ReadBuffer(int len) { }
+        int startIndex = 0;        
+        public byte[] Buffer { get { return buffer; } }
+        public int StartIndex { get { return startIndex; } }
+        public int RemainSize  { get { return buffer.Length - startIndex; } }
+        public void ReadBuffer(int len) { }
+        public void PackData(MainPack pack) { }
     }
 }

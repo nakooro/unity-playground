@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Net.Sockets;
 using System.Net;
+using SocketGameProtocol;
+
 
 namespace Assets._3_Lan
 {
@@ -12,8 +14,11 @@ namespace Assets._3_Lan
     {
         Socket socket;
         List<LanClient> clients = new List<LanClient>();
+        ControllerManager controllerManager;
+
         public LanServer(int port)
         {
+            controllerManager = new ControllerManager(this);
             socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             socket.Bind(new IPEndPoint(IPAddress.Any, port));
             socket.Listen(0);
@@ -26,6 +31,11 @@ namespace Assets._3_Lan
         {
             Socket client = socket.EndAccept(res);
             clients.Add(new LanClient(client));
+        }
+
+        public bool Logon(LanClient client, MainPack pack)
+        {
+            return client.GetUserData.Logon(pack);
         }
     }
 }

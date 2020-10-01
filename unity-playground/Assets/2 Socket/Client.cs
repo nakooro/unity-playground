@@ -45,7 +45,7 @@ public class Client : MonoBehaviour
     }
     void Update()
     {
-        print(buffer.Length);
+        print(BitConverter.ToInt32(buffer,0));
 
         if (Input.GetKeyDown(KeyCode.D))
             Send();

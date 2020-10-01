@@ -1,5 +1,5 @@
 sceneSetups:
-- path: Assets/2 Socket/Socket.unity
+- path: Assets/3 Lan/Lan.unity
   isLoaded: 1
   isActive: 1
   isSubScene: 0

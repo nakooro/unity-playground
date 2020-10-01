@@ -25,17 +25,21 @@ namespace SocketGameProtocol {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
             "ChhTb2NrZXRHYW1lUHJvdG9jb2wucHJvdG8SElNvY2tldEdhbWVQcm90b2Nv",
-            "bCKoAQoITWFpblBhY2sSNAoLcmVxdWVzdGNvZGUYASABKA4yHy5Tb2NrZXRH",
+            "bCLaAQoITWFpblBhY2sSNAoLcmVxdWVzdGNvZGUYASABKA4yHy5Tb2NrZXRH",
             "YW1lUHJvdG9jb2wuUmVxdWVzdENvZGUSMgoKYWN0aW9uY29kZRgCIAEoDjIe",
             "LlNvY2tldEdhbWVQcm90b2NvbC5BY3Rpb25Db2RlEjIKCnJldHVybmNvZGUY",
-            "AyABKA4yHi5Tb2NrZXRHYW1lUHJvdG9jb2wuUmV0dXJuQ29kZSoeCgtSZXF1",
-            "ZXN0Q29kZRIPCgtSZXF1ZXN0Tm9uZRAAKhwKCkFjdGlvbkNvZGUSDgoKQWN0",
-            "aW9uTm9uZRAAKhwKClJldHVybkNvZGUSDgoKUmV0dXJuTm9uZRAAYgZwcm90",
-            "bzM="));
+            "AyABKA4yHi5Tb2NrZXRHYW1lUHJvdG9jb2wuUmV0dXJuQ29kZRIwCglsb2dp",
+            "bnBhY2sYBCABKAsyHS5Tb2NrZXRHYW1lUHJvdG9jb2wuTG9naW5QYWNrIi8K",
+            "CUxvZ2luUGFjaxIQCgh1c2VybmFtZRgBIAEoCRIQCghwYXNzd29yZBgCIAEo",
+            "CSooCgtSZXF1ZXN0Q29kZRIPCgtSZXF1ZXN0Tm9uZRAAEggKBFVzZXIQASoy",
+            "CgpBY3Rpb25Db2RlEg4KCkFjdGlvbk5vbmUQABIJCgVMb2dvbhABEgkKBUxv",
+            "Z2luEAIqMwoKUmV0dXJuQ29kZRIOCgpSZXR1cm5Ob25lEAASCwoHU3VjY2Vz",
+            "cxABEggKBEZhaWwQAmIGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(new[] {typeof(global::SocketGameProtocol.RequestCode), typeof(global::SocketGameProtocol.ActionCode), typeof(global::SocketGameProtocol.ReturnCode), }, null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::SocketGameProtocol.MainPack), global::SocketGameProtocol.MainPack.Parser, new[]{ "Requestcode", "Actioncode", "Returncode" }, null, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::SocketGameProtocol.MainPack), global::SocketGameProtocol.MainPack.Parser, new[]{ "Requestcode", "Actioncode", "Returncode", "Loginpack" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::SocketGameProtocol.LoginPack), global::SocketGameProtocol.LoginPack.Parser, new[]{ "Username", "Password" }, null, null, null, null)
           }));
     }
     #endregion
@@ -44,14 +48,19 @@ namespace SocketGameProtocol {
   #region Enums
   public enum RequestCode {
     [pbr::OriginalName("RequestNone")] RequestNone = 0,
+    [pbr::OriginalName("User")] User = 1,
   }
 
   public enum ActionCode {
     [pbr::OriginalName("ActionNone")] ActionNone = 0,
+    [pbr::OriginalName("Logon")] Logon = 1,
+    [pbr::OriginalName("Login")] Login = 2,
   }
 
   public enum ReturnCode {
     [pbr::OriginalName("ReturnNone")] ReturnNone = 0,
+    [pbr::OriginalName("Success")] Success = 1,
+    [pbr::OriginalName("Fail")] Fail = 2,
   }
 
   #endregion
@@ -89,6 +98,7 @@ namespace SocketGameProtocol {
       requestcode_ = other.requestcode_;
       actioncode_ = other.actioncode_;
       returncode_ = other.returncode_;
+      loginpack_ = other.loginpack_ != null ? other.loginpack_.Clone() : null;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -130,6 +140,17 @@ namespace SocketGameProtocol {
       }
     }
 
+    /// <summary>Field number for the "loginpack" field.</summary>
+    public const int LoginpackFieldNumber = 4;
+    private global::SocketGameProtocol.LoginPack loginpack_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::SocketGameProtocol.LoginPack Loginpack {
+      get { return loginpack_; }
+      set {
+        loginpack_ = value;
+      }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
       return Equals(other as MainPack);
@@ -146,6 +167,7 @@ namespace SocketGameProtocol {
       if (Requestcode != other.Requestcode) return false;
       if (Actioncode != other.Actioncode) return false;
       if (Returncode != other.Returncode) return false;
+      if (!object.Equals(Loginpack, other.Loginpack)) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -155,6 +177,7 @@ namespace SocketGameProtocol {
       if (Requestcode != global::SocketGameProtocol.RequestCode.RequestNone) hash ^= Requestcode.GetHashCode();
       if (Actioncode != global::SocketGameProtocol.ActionCode.ActionNone) hash ^= Actioncode.GetHashCode();
       if (Returncode != global::SocketGameProtocol.ReturnCode.ReturnNone) hash ^= Returncode.GetHashCode();
+      if (loginpack_ != null) hash ^= Loginpack.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -183,6 +206,10 @@ namespace SocketGameProtocol {
         output.WriteRawTag(24);
         output.WriteEnum((int) Returncode);
       }
+      if (loginpack_ != null) {
+        output.WriteRawTag(34);
+        output.WriteMessage(Loginpack);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -204,6 +231,10 @@ namespace SocketGameProtocol {
         output.WriteRawTag(24);
         output.WriteEnum((int) Returncode);
       }
+      if (loginpack_ != null) {
+        output.WriteRawTag(34);
+        output.WriteMessage(Loginpack);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -221,6 +252,9 @@ namespace SocketGameProtocol {
       }
       if (Returncode != global::SocketGameProtocol.ReturnCode.ReturnNone) {
         size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Returncode);
+      }
+      if (loginpack_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Loginpack);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -241,6 +275,12 @@ namespace SocketGameProtocol {
       }
       if (other.Returncode != global::SocketGameProtocol.ReturnCode.ReturnNone) {
         Returncode = other.Returncode;
+      }
+      if (other.loginpack_ != null) {
+        if (loginpack_ == null) {
+          Loginpack = new global::SocketGameProtocol.LoginPack();
+        }
+        Loginpack.MergeFrom(other.Loginpack);
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -268,6 +308,13 @@ namespace SocketGameProtocol {
             Returncode = (global::SocketGameProtocol.ReturnCode) input.ReadEnum();
             break;
           }
+          case 34: {
+            if (loginpack_ == null) {
+              Loginpack = new global::SocketGameProtocol.LoginPack();
+            }
+            input.ReadMessage(Loginpack);
+            break;
+          }
         }
       }
     #endif
@@ -292,6 +339,221 @@ namespace SocketGameProtocol {
           }
           case 24: {
             Returncode = (global::SocketGameProtocol.ReturnCode) input.ReadEnum();
+            break;
+          }
+          case 34: {
+            if (loginpack_ == null) {
+              Loginpack = new global::SocketGameProtocol.LoginPack();
+            }
+            input.ReadMessage(Loginpack);
+            break;
+          }
+        }
+      }
+    }
+    #endif
+
+  }
+
+  public sealed partial class LoginPack : pb::IMessage<LoginPack>
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      , pb::IBufferMessage
+  #endif
+  {
+    private static readonly pb::MessageParser<LoginPack> _parser = new pb::MessageParser<LoginPack>(() => new LoginPack());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<LoginPack> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::SocketGameProtocol.SocketGameProtocolReflection.Descriptor.MessageTypes[1]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public LoginPack() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public LoginPack(LoginPack other) : this() {
+      username_ = other.username_;
+      password_ = other.password_;
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public LoginPack Clone() {
+      return new LoginPack(this);
+    }
+
+    /// <summary>Field number for the "username" field.</summary>
+    public const int UsernameFieldNumber = 1;
+    private string username_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string Username {
+      get { return username_; }
+      set {
+        username_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "password" field.</summary>
+    public const int PasswordFieldNumber = 2;
+    private string password_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string Password {
+      get { return password_; }
+      set {
+        password_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as LoginPack);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(LoginPack other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (Username != other.Username) return false;
+      if (Password != other.Password) return false;
+      return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (Username.Length != 0) hash ^= Username.GetHashCode();
+      if (Password.Length != 0) hash ^= Password.GetHashCode();
+      if (_unknownFields != null) {
+        hash ^= _unknownFields.GetHashCode();
+      }
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      output.WriteRawMessage(this);
+    #else
+      if (Username.Length != 0) {
+        output.WriteRawTag(10);
+        output.WriteString(Username);
+      }
+      if (Password.Length != 0) {
+        output.WriteRawTag(18);
+        output.WriteString(Password);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(output);
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+      if (Username.Length != 0) {
+        output.WriteRawTag(10);
+        output.WriteString(Username);
+      }
+      if (Password.Length != 0) {
+        output.WriteRawTag(18);
+        output.WriteString(Password);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(ref output);
+      }
+    }
+    #endif
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      if (Username.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(Username);
+      }
+      if (Password.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(Password);
+      }
+      if (_unknownFields != null) {
+        size += _unknownFields.CalculateSize();
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(LoginPack other) {
+      if (other == null) {
+        return;
+      }
+      if (other.Username.Length != 0) {
+        Username = other.Username;
+      }
+      if (other.Password.Length != 0) {
+        Password = other.Password;
+      }
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      input.ReadRawMessage(this);
+    #else
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+          case 10: {
+            Username = input.ReadString();
+            break;
+          }
+          case 18: {
+            Password = input.ReadString();
+            break;
+          }
+        }
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
+            break;
+          case 10: {
+            Username = input.ReadString();
+            break;
+          }
+          case 18: {
+            Password = input.ReadString();
             break;
           }
         }
