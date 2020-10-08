@@ -5,17 +5,20 @@ using UnityEngine.UI;
 
 public class LogonPanel : MonoBehaviour
 {
+    [SerializeField] LogonRequest logonRequest;
     [SerializeField] InputField username;
     [SerializeField] InputField password;
     [SerializeField] Button logon;
 
     void Start()
     {
-        logon.onClick.AddListener(Logon);
+        logon?.onClick.AddListener(OnLogon);
     }
-    void Logon()
+    void OnLogon()
     {
-        GameFace.Instance.Logon(username.text, password.text);
+        if (username.text == "" || password.text == "")
+            return;
+        logonRequest?.SendRequest(username.text, password.text);     
     }
     
 }

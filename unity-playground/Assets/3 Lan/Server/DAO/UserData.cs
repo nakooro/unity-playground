@@ -18,7 +18,7 @@ namespace Assets._3_Lan.DAO
         }
         void ConnectMysql()
         {
-            string connstr = "database=lan;data source=127.0.0.1;password=toor;pooling=false;charset=utf8;port=33306";
+            string connstr = "database=lan;data source=127.0.0.1;user=root;password=toor;pooling=false;charset=utf8;port=33306";
 
             try
             {
@@ -39,8 +39,6 @@ namespace Assets._3_Lan.DAO
 
             string sqlstr = string.Format("select * from lan.userdata where username='{0}'", username);
             MySqlCommand cmd = new MySqlCommand(sqlstr, mysqlCon);
-            // MySqlDataReader read = cmd.ExecuteReader();
-            // if (read.Read()) return false;
 
             try
             {
@@ -64,10 +62,6 @@ namespace Assets._3_Lan.DAO
                 return false;
             }
             
-        }
-        bool Login(MainPack pack)
-        {
-            return false;
         }
     }
 }

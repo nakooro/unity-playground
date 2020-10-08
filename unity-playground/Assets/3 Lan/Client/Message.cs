@@ -5,7 +5,7 @@ using System;
 using SocketGameProtocol;
 using System.Linq;
 using Google.Protobuf;
-
+using System.Text;
 
 public class Message
 {
@@ -18,7 +18,30 @@ public class Message
 
     public Message() { }
 
-    public void ReadBuffer(int len, Action<MainPack> HandleRequest) { }
+    public void ReadBuffer(int len, Action<MainPack> HandleRequest)
+    {
+        startIndex += len;
+        if (startIndex <= HEADER_SIZE)
+            return;
+
+        int count = BitConverter.ToInt32(buffer, 0);
+
+        while(true)
+        {
+            if (startIndex >= count + HEADER_SIZE)
+            {
+                MainPack pack = MainPack.Descriptor.Parser.ParseFrom(buffer, HEADER_SIZE, count) as MainPack;                             
+                Array.Copy(buffer, count + HEADER_SIZE, buffer, 0, buffer.Length - count - HEADER_SIZE);
+                startIndex -= count + HEADER_SIZE;
+                HandleRequest(pack);
+            }
+            else
+            {
+                break;
+            }
+        }       
+    }
+
     public byte[] PackData(MainPack pack)
     {
         byte[] data = pack.ToByteArray();

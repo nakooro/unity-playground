@@ -14,7 +14,7 @@ namespace Assets._3_Lan
             requestCode = RequestCode.User;
             
         }
-        public MainPack Logon(LanServer server, LanClient client, MainPack pack)
+        public MainPack Logon(LanClient client, MainPack pack)
         {
             if (client.Logon(pack))
             {

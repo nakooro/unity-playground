@@ -20,28 +20,52 @@ public class ClientManager : BaseManager
     public override void OnDestroy()
     {
         base.OnDestroy();
+        message = null;
+        CloseSocket();
     }
     void InitSocket()
     {
         socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-        socket.Connect(new IPEndPoint(IPAddress.Any, 6666));
-        StartReceive();
+        try
+        {
+            socket.Connect("127.0.0.1", 6666);
+            StartReceive();
+
+        }
+        catch(Exception e)
+        {
+            Debug.Log(e.Message);
+        }
     }
     void CloseSocket()
     {
-        socket?.Close();
+        socket.Close();
     }
     void StartReceive()
     {
-        socket?.BeginReceive(message.Buffer, message.StartIndex, message.RemainSize, SocketFlags.None, ReceiveCallback, null);
+        socket.BeginReceive(message.Buffer, message.StartIndex, message.RemainSize, SocketFlags.None, ReceiveCallback, null);
     }
     void ReceiveCallback(IAsyncResult res)
     {
+        if (socket == null || socket.Connected == false)
+            return;
 
+        int len = socket.EndReceive(res);
+        if (len == 0)
+        {
+            CloseSocket();
+            return;
+        }
+
+        message.ReadBuffer(len, HandleResponse);
+        StartReceive();
     }
-    void HandleResponse() { }
+    void HandleResponse(MainPack pack)
+    {
+        GameFace.Instance.HandleResponse(pack);
+    }
     public void Send(MainPack pack)
     {        
-        socket?.Send(message.PackData(pack));
+        socket.Send(message.PackData(pack));
     }
 }

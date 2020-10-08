@@ -8,6 +8,7 @@ using System.Net;
 using SocketGameProtocol;
 using Assets._3_Lan.DAO;
 using Google.Protobuf;
+using UnityEngine;
 
 namespace Assets._3_Lan
 {
@@ -32,7 +33,7 @@ namespace Assets._3_Lan
             this.lanServer= lanServer;
         }
         void ReadBuffer(int len, Action<MainPack> HandleRequest)
-        {
+        {            
             startIndex += len;
             if (startIndex <= HEADER_SIZE)
                 return;
@@ -45,7 +46,7 @@ namespace Assets._3_Lan
                 {
                     MainPack pack = MainPack.Descriptor.Parser.ParseFrom(buffer, HEADER_SIZE, count) as MainPack;
                     Array.Copy(buffer, count + HEADER_SIZE, buffer, 0, buffer.Length - count - HEADER_SIZE);
-                    startIndex -= count + 4;                         
+                    startIndex -= count + HEADER_SIZE;                         
                     HandleRequest(pack);
                 }
                 else

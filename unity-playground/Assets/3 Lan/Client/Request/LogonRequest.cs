@@ -5,16 +5,35 @@ using SocketGameProtocol;
 
 public class LogonRequest : BaseRequest
 {
-
-    protected override void Awake()
+    protected override void Start()
     {
-        base.Awake();
-        GameFace.Instance.AddRequest(ActionCode.Logon, this);
+        requestCode = RequestCode.User;
+        actionCode = ActionCode.Logon;
+
+        base.Start();        
     }
-    public override void SendRequest(MainPack pack) {}
-    public void Logon(string username, string password)
+
+    public void OnReponse(MainPack pack)
+    {
+        switch (pack.Returncode)
+        {
+            case ReturnCode.Fail:
+                print("OnReponse :: Fail");
+                break;
+            case ReturnCode.Success:
+                print("OnReponse :: Success");
+                break;
+            default:
+                print("OnReponse :: Default");
+                break;
+        }
+        // base.OnResponse(pack);
+    }
+    public void SendRequest(string username, string password)
     {
         MainPack pack = new MainPack();
+        pack.Requestcode = requestCode;
+        pack.Actioncode = actionCode;
         LoginPack loginPack = new LoginPack();
         loginPack.Username = username;
         loginPack.Password = password;

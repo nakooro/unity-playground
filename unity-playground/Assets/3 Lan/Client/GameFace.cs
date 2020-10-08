@@ -7,17 +7,19 @@ public class GameFace : MonoBehaviour
 {       
     ClientManager clientManager;
     RequestManager requestManager;
-    static GameFace face;
+    private static GameFace face;
     public static GameFace Instance
     {
-        get { return face; }
+        get {return face; }
     }
     private void Awake()
     {
         face = this;
+
     }
     void Start()
     {
+        
         clientManager = new ClientManager(this);
         clientManager.OnInit();
 
@@ -44,9 +46,8 @@ public class GameFace : MonoBehaviour
     {
         requestManager.RemoveRequest(action);
     }
-
-    public void Logon(string username, string password)
+    public void HandleResponse(MainPack pack)
     {
-        requestManager.Logon(username, password);
+        requestManager.HandleResponse(pack);
     }
 }

@@ -14,6 +14,7 @@ public class RequestManager : BaseManager
     public override void OnDestroy()
     {
         base.OnDestroy();
+        requestDict.Clear();
     }
 
     public void AddRequest(ActionCode action, BaseRequest request)
@@ -24,12 +25,15 @@ public class RequestManager : BaseManager
     {
         requestDict.Remove(action);
     }
-    public void Logon(string username, string password)
+    public void HandleResponse(MainPack pack)
     {
-
-        // requestDict[ActionCode.Logon].SenedRequest();
+        if (requestDict.TryGetValue(pack.Actioncode, out BaseRequest request))
+        {
+            request.OnResponse(pack);
+        }
+        else
+        {
+            Debug.Log("沒有 request 處理");
+        }
     }
-
-
-
 }

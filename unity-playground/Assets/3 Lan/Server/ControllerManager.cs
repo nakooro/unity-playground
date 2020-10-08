@@ -35,7 +35,7 @@ namespace Assets._3_Lan
                 }
 
 
-                object[] o = new object[] { lanServer, client, pack };
+                object[] o = new object[] { client, pack };
                 object ret = method.Invoke(controller, o);
 
                 if (ret == null)
